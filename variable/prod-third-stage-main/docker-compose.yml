@@ -1,0 +1,33 @@
+name: travel_agent
+version: "3"
+
+services:
+  app:
+    build: .
+    container_name: travel_agent
+    environment:
+      TELEGRAM_BOT_TOKEN: your_token
+      TELEGRAM_BOT_DROP_PENDING_UPDATES: False
+      TELEGRAM_BOT_DEBUG: False
+
+      TELEGRAM_BOT_DB_USER: user
+      TELEGRAM_BOT_DB_PASSWORD: pass
+      TELEGRAM_BOT_DB_ADDRESS: postgres
+      TELEGRAM_BOT_DB_PORT: 5432
+      TELEGRAM_BOT_DB_NAME: travel_agent
+
+      TELEGRAM_BOT_REDIS_HOST: redis
+      TELEGRAM_BOT_REDIS_PORT: 6379
+    depends_on:
+      - postgres
+      - redis
+
+  redis:
+    image: redis
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: travel_agent
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
